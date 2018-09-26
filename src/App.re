@@ -5,8 +5,8 @@ let make = (_children) => {
   render: _self =>
     <div className="container is-fluid" style=(ReactDOMRe.Style.make(~marginTop="1em", ()))>
       <TaskInput />
-      <Timer />
       <Info />
+      <Timer />
       <HistoryList />
       <About />
     </div>
