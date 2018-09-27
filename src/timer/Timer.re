@@ -2,16 +2,27 @@ let timerText = ((min: int, sec: int)) : string => {
   let secText = sec == 0 ? "00" : sec |> string_of_int;
   string_of_int(min) ++ ":" ++ secText;
 };
-
 type state = {
   min: int,
   sec: int,
 };
+
+type timer =
+  | Work
+  | ShortBreak
+  | LongBreak;
+
+let startMin = (timer: timer) =>
+  switch (timer) {
+  | Work => 25
+  | ShortBreak => 5
+  | LongBreak => 20
+  };
+
 type action =
   | Start
-  | ShortBreak
-  | LongBreak
-  | Stop;
+  | Stop
+  | Set(timer);
 
 let component = ReasonReact.reducerComponent("Timer");
 
@@ -20,10 +31,9 @@ let make = _children => {
   initialState: () => {min: 25, sec: 0},
   reducer: (action, state) =>
     switch (action) {
-    | Start
-    | Stop => ReasonReact.Update({...state, min: 25})
-    | ShortBreak => ReasonReact.Update({...state, min: 5})
-    | LongBreak => ReasonReact.Update({...state, min: 20})
+    | Start => ReasonReact.NoUpdate
+    | Stop => ReasonReact.NoUpdate
+    | Set(timer) => ReasonReact.Update({...state, min: startMin(timer)})
     },
   render: ({state, send}) =>
     <div className="box">
@@ -39,11 +49,9 @@ let make = _children => {
         )>
         ((state.min, state.sec) |> timerText |> ReasonReact.string)
       </h1>
-      <Actions
-        setStart=(_evt => send(Start))
-        setShortBreak=(_evt => send(ShortBreak))
-        setLongBreak=(_evt => send(LongBreak))
-        setStop=(_evt => send(Stop))
-      />
+      <Actions 
+        setWork=(_evt => send(Set(Work))) 
+        setShortBreak=(_evt => send(Set(ShortBreak))) 
+        setLongBreak=(_evt => send(Set(LongBreak))) />
     </div>,
 };

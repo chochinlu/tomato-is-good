@@ -1,28 +1,24 @@
 let component = ReasonReact.statelessComponent("Actions");
 
-let make = (~setStart, ~setShortBreak, ~setLongBreak, ~setStop, _children) => {
-  ...component,
-  render: _self =>
-    <div className="tile">
+let actionEle = (index, (title, handler)) =>
+  <div className="tile" key=("action-" ++ string_of_int(index))>
+    <a className="button is-fullwidth is-medium" onClick=handler>
+      (title |> ReasonReact.string)
+    </a>
+  </div>;
+
+let make = (~setWork, ~setShortBreak, ~setLongBreak, _children) => {
+  let actions = [|
+    ("Work", setWork),
+    ("Short Break", setShortBreak),
+    ("Long Break", setLongBreak),
+  |];
+
+  {
+    ...component,
+    render: _self =>
       <div className="tile">
-        <a className="button is-fullwidth is-medium" onClick=setStart>
-          ("Start" |> ReasonReact.string)
-        </a>
-      </div>
-      <div className="tile">
-        <a className="button is-fullwidth is-medium" onClick=setShortBreak>
-          ("Short Break" |> ReasonReact.string)
-        </a>
-      </div>
-      <div className="tile">
-        <a className="button is-fullwidth is-medium" onClick=setLongBreak>
-          ("Long Break" |> ReasonReact.string)
-        </a>
-      </div>
-      <div className="tile">
-        <a className="button is-fullwidth is-medium" onClick=setStop>
-          ("Stop" |> ReasonReact.string)
-        </a>
-      </div>
-    </div>,
+        (actions |> Array.mapi(actionEle) |> ReasonReact.array)
+      </div>,
+  };
 };
