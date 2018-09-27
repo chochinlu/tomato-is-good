@@ -1,13 +1,23 @@
-let component = ReasonReact.statelessComponent("App");
+type state = {task: string};
+type action =
+  | Submit(string);
 
-let make = (_children) => {
+let component = ReasonReact.reducerComponent("App");
+
+let make = _children => {
   ...component,
-  render: _self =>
-    <div className="container is-fluid" style=(ReactDOMRe.Style.make(~marginTop="1em", ()))>
-      <TaskInput />
-      <Info />
+  initialState: () => {task: ""},
+  reducer:
+    fun
+    | Submit(taskText) => (_state => ReasonReact.Update({task: taskText})),
+  render: ({state, send}) =>
+    <div
+      className="container is-fluid"
+      style=(ReactDOMRe.Style.make(~marginTop="1em", ()))>
+      <TaskInput handleSubmit=(text => send(Submit(text))) />
+      <Info task=state.task />
       <Timer />
       <HistoryList />
       <About />
-    </div>
+    </div>,
 };
