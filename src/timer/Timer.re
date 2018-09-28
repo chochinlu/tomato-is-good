@@ -37,6 +37,11 @@ let make = _children => {
     },
   render: ({state, send}) =>
     <div className="box">
+      <SettingActions
+        setWork=(_evt => send(Set(Work)))
+        setShortBreak=(_evt => send(Set(ShortBreak)))
+        setLongBreak=(_evt => send(Set(LongBreak)))
+      />
       <h1
         style=(
           ReactDOMRe.Style.make(
@@ -49,9 +54,6 @@ let make = _children => {
         )>
         ((state.min, state.sec) |> timerText |> ReasonReact.string)
       </h1>
-      <Actions 
-        setWork=(_evt => send(Set(Work))) 
-        setShortBreak=(_evt => send(Set(ShortBreak))) 
-        setLongBreak=(_evt => send(Set(LongBreak))) />
+      <Actions />
     </div>,
 };
