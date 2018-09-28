@@ -54,6 +54,6 @@ let make = _children => {
         )>
         ((state.min, state.sec) |> timerText |> ReasonReact.string)
       </h1>
-      <Actions />
+      <Actions setStart=(_evt => send(Start)) setStop=(_evt => send(Stop)) />
     </div>,
 };

@@ -1,7 +1,7 @@
 let component = ReasonReact.statelessComponent("SettingActions");
 
 let actionEle = (index, (title, handler)) =>
-  <div className="tile" key=("action-" ++ string_of_int(index))>
+  <div className="tile" key=("setting-action-" ++ string_of_int(index))>
     <a className="button is-fullwidth is-normal" onClick=handler>
       (title |> ReasonReact.string)
     </a>
