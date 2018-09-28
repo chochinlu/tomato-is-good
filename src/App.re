@@ -15,8 +15,8 @@ let make = _children => {
       className="container is-fluid"
       style=(ReactDOMRe.Style.make(~marginTop="1em", ()))>
       <TaskInput handleSubmit=(text => send(Submit(text))) />
-      <Info task=state.task />
       <Timer />
+      <Info task=state.task />
       <HistoryList />
       <About />
     </div>,

@@ -3,7 +3,7 @@ let component = ReasonReact.statelessComponent("Info");
 let make = (~task, _children) => {
   let text = task =>
     task == "" ?
-      "Let's do something amazing!" : "Task: " ++ task ++ " Let's rock!!";
+      "Let's do something amazing!" : "Task: " ++ task ++ " Ready to go !!";
 
   {
     ...component,
