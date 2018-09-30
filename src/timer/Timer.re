@@ -1,5 +1,3 @@
-let component = ReasonReact.statelessComponent("Timer");
-
 let formatTime = (time: int) =>
   time < 10 ? "0" ++ string_of_int(time) : string_of_int(time);
 
@@ -10,6 +8,8 @@ let convertedTime = seconds => {
 
   formatTime(minutesRemaining) ++ ":" ++ formatTime(secondsRemaining);
 };
+
+let component = ReasonReact.statelessComponent("Timer");
 
 let make = (~timeLeft, _children) => {
   ...component,

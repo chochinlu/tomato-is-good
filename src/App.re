@@ -2,8 +2,10 @@ type mode =
   | Pomodoro
   | ShorBreak
   | LongBreak;
+
 type action =
   | Submit(string);
+
 type state = {
   task: string,
   timeLeft: int,
