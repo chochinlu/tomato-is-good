@@ -1,6 +1,17 @@
 let component = ReasonReact.statelessComponent("Timer");
 
-let make = _children => {
+let formatTime = (time: int) =>
+  time < 10 ? "0" ++ string_of_int(time) : string_of_int(time);
+
+let convertedTime = seconds => {
+  let minutes = seconds / 60;
+  let secondsRemaining = seconds mod 60;
+  let minutesRemaining = minutes mod 60;
+
+  formatTime(minutesRemaining) ++ ":" ++ formatTime(secondsRemaining);
+};
+
+let make = (~timeLeft, _children) => {
   ...component,
   render: _self =>
     <div className="box">
@@ -15,7 +26,7 @@ let make = _children => {
             (),
           )
         }>
-        {"00:00" |> ReasonReact.string}
+        {timeLeft |> convertedTime |> ReasonReact.string}
       </h1>
       <Actions />
     </div>,
