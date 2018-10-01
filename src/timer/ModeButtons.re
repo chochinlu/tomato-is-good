@@ -5,7 +5,7 @@ let make = (~setPomodoro, ~setShortBreak, ~setLongBreak, _children) => {
   render: _self =>
     <div className="tile">
       <ModeButton label="Pomodoro" onClick=setPomodoro />
-      <ModeButton label="ShorBreak" onClick=setShortBreak />
+      <ModeButton label="ShortBreak" onClick=setShortBreak />
       <ModeButton label="LongBreak" onClick=setLongBreak />
     </div>,
 };

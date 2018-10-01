@@ -5,3 +5,9 @@
 .margin-top-down {
   margin: 1em 0;
 }
+
+.timer-label {
+  color: #444444;
+  font-size: 7em;
+  text-align: center;
+}
