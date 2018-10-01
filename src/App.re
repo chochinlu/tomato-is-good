@@ -6,13 +6,15 @@ type mode =
 type action =
   | Submit(string)
   | Set(mode)
-  | Tick;
+  | Tick
+  | TogglePlay;
 
 type state = {
   task: string,
   timeLeft: int,
   mode,
   completeCount: int,
+  play: bool,
 };
 
 let secondsForMode = mode =>
@@ -24,11 +26,11 @@ let secondsForMode = mode =>
 
 let timeIsUp = state => state.timeLeft == 1;
 
-let updateTimeLeft = state =>
-  ReasonReact.Update({
-    ...state,
-    timeLeft: state.timeLeft == 0 ? 0 : state.timeLeft - 1,
-  });
+let updateTimeLeft = state => {
+  let timeLeft =
+    state.play ? state.timeLeft == 0 ? 0 : state.timeLeft - 1 : state.timeLeft;
+  ReasonReact.Update({...state, timeLeft});
+};
 
 let updateMode = state => {
   let completeCount =
@@ -57,6 +59,7 @@ let make = _children => {
     timeLeft: secondsForMode(Pomodoro),
     mode: Pomodoro,
     completeCount: 0,
+    play: false,
   },
   didMount: self => {
     let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
@@ -66,10 +69,14 @@ let make = _children => {
     switch (action) {
     | Submit(taskText) => ReasonReact.Update({...state, task: taskText})
     | Set(mode) =>
-      ReasonReact.Update({...state, mode, timeLeft: secondsForMode(mode)})
-    | Tick =>
-      Js.log("tick");
-      timeIsUp(state) ? updateMode(state) : updateTimeLeft(state);
+      ReasonReact.Update({
+        ...state,
+        mode,
+        timeLeft: secondsForMode(mode),
+        play: false,
+      })
+    | Tick => timeIsUp(state) ? updateMode(state) : updateTimeLeft(state)
+    | TogglePlay => ReasonReact.Update({...state, play: !state.play})
     },
   render: ({state, send}) =>
     <div
@@ -78,9 +85,11 @@ let make = _children => {
       <TaskInput handleSubmit={text => send(Submit(text))} />
       <Timer
         timeLeft={state.timeLeft}
+        play={state.play}
         setPomodoro={_event => send(Set(Pomodoro))}
         setShortBreak={_event => send(Set(ShortBreak))}
         setLongBreak={_event => send(Set(LongBreak))}
+        togglePlay={_event => send(TogglePlay)}
       />
       <Info task={state.task} />
       <HistoryList />

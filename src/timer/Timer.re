@@ -11,7 +11,16 @@ let convertedTime = seconds => {
 
 let component = ReasonReact.statelessComponent("Timer");
 
-let make = (~timeLeft, ~setPomodoro, ~setShortBreak, ~setLongBreak, _children) => {
+let make =
+    (
+      ~timeLeft,
+      ~setPomodoro,
+      ~setShortBreak,
+      ~setLongBreak,
+      ~togglePlay,
+      ~play,
+      _children,
+    ) => {
   ...component,
   render: _self =>
     <div className="box">
@@ -28,6 +37,6 @@ let make = (~timeLeft, ~setPomodoro, ~setShortBreak, ~setLongBreak, _children) =
         }>
         {timeLeft |> convertedTime |> ReasonReact.string}
       </h1>
-      <Actions />
+      <Actions play togglePlay />
     </div>,
 };
