@@ -2,6 +2,7 @@
 
 A simple [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) Timer implement for practicing [Reason-React](https://github.com/reasonml/reason-react).
 
+Inspired by [Red](https://github.com/excitement-engineer/Red).
 
 ## Run Project
 
