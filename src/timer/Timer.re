@@ -11,11 +11,11 @@ let convertedTime = seconds => {
 
 let component = ReasonReact.statelessComponent("Timer");
 
-let make = (~timeLeft, _children) => {
+let make = (~timeLeft, ~setPomodoro, ~setShortBreak, ~setLongBreak, _children) => {
   ...component,
   render: _self =>
     <div className="box">
-      <SettingActions />
+      <ModeButtons setPomodoro setShortBreak setLongBreak />
       <h1
         style={
           ReactDOMRe.Style.make(

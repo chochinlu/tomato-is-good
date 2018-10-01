@@ -1,10 +1,11 @@
 type mode =
   | Pomodoro
-  | ShorBreak
+  | ShortBreak
   | LongBreak;
 
 type action =
-  | Submit(string);
+  | Submit(string)
+  | Set(mode);
 
 type state = {
   task: string,
@@ -15,7 +16,7 @@ type state = {
 let secondsForMode = mode =>
   switch (mode) {
   | Pomodoro => 25 * 60
-  | ShorBreak => 5 * 60
+  | ShortBreak => 5 * 60
   | LongBreak => 10 * 60
   };
 
@@ -31,13 +32,20 @@ let make = _children => {
   reducer: (action, state) =>
     switch (action) {
     | Submit(taskText) => ReasonReact.Update({...state, task: taskText})
+    | Set(mode) =>
+      ReasonReact.Update({...state, mode, timeLeft: secondsForMode(mode)})
     },
   render: ({state, send}) =>
     <div
       className="container is-fluid"
       style={ReactDOMRe.Style.make(~marginTop="1em", ())}>
       <TaskInput handleSubmit={text => send(Submit(text))} />
-      <Timer timeLeft={state.timeLeft} />
+      <Timer
+        timeLeft={state.timeLeft}
+        setPomodoro={_event => send(Set(Pomodoro))}
+        setShortBreak={_event => send(Set(ShortBreak))}
+        setLongBreak={_event => send(Set(LongBreak))}
+      />
       <Info task={state.task} />
       <HistoryList />
       <About />
