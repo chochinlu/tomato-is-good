@@ -47,6 +47,7 @@ let updateMode = state => {
     timeLeft: secondsForMode(mode),
     mode,
     completeCount,
+    play: false,
   });
 };
 
