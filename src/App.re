@@ -58,12 +58,18 @@ let make = _children => {
     mode: Pomodoro,
     completeCount: 0,
   },
+  didMount: self => {
+    let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
+    self.onUnmount(() => Js.Global.clearInterval(intervalId));
+  },
   reducer: (action, state) =>
     switch (action) {
     | Submit(taskText) => ReasonReact.Update({...state, task: taskText})
     | Set(mode) =>
       ReasonReact.Update({...state, mode, timeLeft: secondsForMode(mode)})
-    | Tick => timeIsUp(state) ? updateMode(state) : updateTimeLeft(state)
+    | Tick =>
+      Js.log("tick");
+      timeIsUp(state) ? updateMode(state) : updateTimeLeft(state);
     },
   render: ({state, send}) =>
     <div
