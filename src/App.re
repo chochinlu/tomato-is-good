@@ -17,6 +17,13 @@ type state = {
   play: bool,
 };
 
+let modeName = mode =>
+  switch (mode) {
+  | Pomodoro => "Pomodoro"
+  | ShortBreak => "ShortBreak"
+  | LongBreak => "LongBreak"
+  };
+
 let secondsForMode = mode =>
   switch (mode) {
   | Pomodoro => 25 * 60
@@ -87,6 +94,7 @@ let make = _children => {
       <Timer
         timeLeft={state.timeLeft}
         play={state.play}
+        modeName={state.mode |> modeName}
         setPomodoro={_event => send(Set(Pomodoro))}
         setShortBreak={_event => send(Set(ShortBreak))}
         setLongBreak={_event => send(Set(LongBreak))}

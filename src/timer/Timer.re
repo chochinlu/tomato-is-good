@@ -14,6 +14,7 @@ let component = ReasonReact.statelessComponent("Timer");
 let make =
     (
       ~timeLeft,
+      ~modeName,
       ~setPomodoro,
       ~setShortBreak,
       ~setLongBreak,
@@ -24,7 +25,7 @@ let make =
   ...component,
   render: _self =>
     <div className="box">
-      <ModeButtons setPomodoro setShortBreak setLongBreak />
+      <ModeButtons setPomodoro setShortBreak setLongBreak modeName />
       <h1 className="timer-label">
         {timeLeft |> convertedTime |> ReasonReact.string}
       </h1>
