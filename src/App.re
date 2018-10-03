@@ -12,7 +12,7 @@ type action =
   | TogglePlay;
 
 type state = {
-  task: string,
+  task: option(string),
   timeLeft: int,
   mode,
   completeCount: int,
@@ -65,7 +65,7 @@ let component = ReasonReact.reducerComponent("App");
 let make = _children => {
   ...component,
   initialState: () => {
-    task: "",
+    task: None,
     timeLeft: secondsForMode(Pomodoro),
     mode: Pomodoro,
     completeCount: 0,
@@ -77,7 +77,8 @@ let make = _children => {
   },
   reducer: (action, state) =>
     switch (action) {
-    | Submit(taskText) => ReasonReact.Update({...state, task: taskText})
+    | Submit(taskText) =>
+      ReasonReact.Update({...state, task: Some(taskText)})
     | Set(mode) =>
       ReasonReact.Update({
         ...state,
@@ -102,7 +103,7 @@ let make = _children => {
         setLongBreak={_event => send(Set(LongBreak))}
         togglePlay={_event => send(TogglePlay)}
       />
-      <Info task={state.task} />
+      <Info task=?{state.task} />
       <HistoryList />
       <About />
     </div>,
