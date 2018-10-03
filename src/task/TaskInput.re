@@ -12,7 +12,7 @@ let make = (~handleSubmit, _children) => {
   reducer: (action, state) =>
     switch (action) {
     | Change(text) => ReasonReact.Update({taskText: text})
-    | KeyDown(13) =>
+    | KeyDown(13) when state.taskText !== "" =>
       ReasonReact.SideEffects((_self => handleSubmit(state.taskText)))
     | KeyDown(27)
     | ClearInput => ReasonReact.Update({taskText: ""})
