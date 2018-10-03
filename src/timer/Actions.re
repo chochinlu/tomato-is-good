@@ -7,12 +7,13 @@ module PlayIcon = {
   };
 };
 
-module StopIcon = {
-  let component = ReasonReact.statelessComponent("StopIcon");
+module PauseIcon = {
+  let component = ReasonReact.statelessComponent("PauseIcon
+");
   let make = _children => {
     ...component,
     render: _self =>
-      <span className="icon"> <i className="fas fa-stop" /> </span>,
+      <span className="icon"> <i className="fas fa-pause" /> </span>,
   };
 };
 
@@ -23,8 +24,8 @@ let make = (~play, ~togglePlay, _children) => {
   render: _self =>
     <div className="tile">
       <a className="button is-fullwidth is-medium" onClick=togglePlay>
-        {play ? <StopIcon /> : <PlayIcon />}
-        <span> {(play ? "Stop" : "Play") |> ReasonReact.string} </span>
+        {play ? <PauseIcon /> : <PlayIcon />}
+        <span> {(play ? "Pause" : "Play") |> ReasonReact.string} </span>
       </a>
     </div>,
 };
