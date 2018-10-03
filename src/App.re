@@ -1,3 +1,5 @@
+Utils.requireCSS("./common.css");
+
 type mode =
   | Pomodoro
   | ShortBreak
