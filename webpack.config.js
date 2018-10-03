@@ -1,14 +1,22 @@
-const path = require('path');
+const path = require("path");
 const outputDir = path.join(__dirname, "build/");
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  entry: './src/Index.bs.js',
-  mode: isProd ? 'production' : 'development',
+  entry: "./src/Index.bs.js",
+  mode: isProd ? "production" : "development",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }]
+      }
+    ]
+  },
   output: {
     path: outputDir,
     publicPath: outputDir,
-    filename: 'Index.js',
-  },
+    filename: "Index.js"
+  }
 };
