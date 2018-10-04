@@ -1,10 +1,14 @@
 # tomato-is-good
 
-A simple [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) Timer implement for practicing [Reason-React](https://github.com/reasonml/reason-react).
+A simple [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) timer and task management powered by [Reason-React](https://github.com/reasonml/reason-react).
 
-Inspired by [Red](https://github.com/excitement-engineer/Red).
+The timer was Inspired by [Red](https://github.com/excitement-engineer/Red).
 
-## Run Project
+## Usage
+
+Please visit: [https://chochinlu.github.io/tomato-is-good/](https://chochinlu.github.io/tomato-is-good/)
+
+## Development
 
 ```sh
 npm install
