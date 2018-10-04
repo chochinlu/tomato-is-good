@@ -13,6 +13,7 @@ type action =
 
 type state = {
   task: option(string),
+  startAt: option(Js.Date.t),
   timeLeft: int,
   mode,
   completeCount: int,
@@ -81,6 +82,7 @@ let make = _children => {
   ...component,
   initialState: () => {
     task: None,
+    startAt: None,
     timeLeft: secondsForMode(Pomodoro),
     mode: Pomodoro,
     completeCount: 0,
@@ -100,9 +102,15 @@ let make = _children => {
         mode,
         timeLeft: secondsForMode(mode),
         play: false,
+        startAt: None,
       })
     | Tick => timeIsUp(state) ? updateMode(state) : updateTimeLeft(state)
-    | TogglePlay => ReasonReact.Update({...state, play: !state.play})
+    | TogglePlay =>
+      ReasonReact.Update({
+        ...state,
+        play: !state.play,
+        startAt: state.play ? state.startAt : Some(Js.Date.make()),
+      })
     },
   render: ({state, send}) =>
     <div
@@ -118,7 +126,7 @@ let make = _children => {
         setLongBreak={_event => send(Set(LongBreak))}
         togglePlay={_event => send(TogglePlay)}
       />
-      <Info title={title(state)} />
+      <Info title={title(state)} startAt={state.startAt} />
       <HistoryList />
       <About />
     </div>,
