@@ -26,6 +26,21 @@ let modeName = mode =>
   | LongBreak => "LongBreak"
   };
 
+let isPormodoro =
+  fun
+  | Pomodoro => true
+  | ShortBreak
+  | LongBreak => false;
+
+let taskName = task =>
+  switch (task) {
+  | None => "Unnamed Task"
+  | Some(name) => name
+  };
+
+let title = state =>
+  isPormodoro(state.mode) ? taskName(state.task) : modeName(state.mode);
+
 let secondsForMode = mode =>
   switch (mode) {
   | Pomodoro => 25 * 60
@@ -103,7 +118,7 @@ let make = _children => {
         setLongBreak={_event => send(Set(LongBreak))}
         togglePlay={_event => send(TogglePlay)}
       />
-      <Info task=?{state.task} />
+      <Info title={title(state)} />
       <HistoryList />
       <About />
     </div>,

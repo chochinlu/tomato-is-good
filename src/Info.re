@@ -1,21 +1,15 @@
-let taskName = task => {
-  let taskName =
-    switch (task) {
-    | None => "Unnamed"
-    | Some(name) => name
-    };
+let titleEle = title =>
   <span>
-    <strong> {"  [ " ++ taskName ++ " ]" |> ReasonReact.string} </strong>
+    <strong> {"  [ " ++ title ++ " ]" |> ReasonReact.string} </strong>
   </span>;
-};
 
 let component = ReasonReact.statelessComponent("Info");
 
-let make = (~task=?, _children) => {
+let make = (~title, _children) => {
   ...component,
   render: _self =>
     <div className="notification">
       <i className="fas fa-info-circle" />
-      {task |> taskName}
+      {title |> titleEle}
     </div>,
 };
