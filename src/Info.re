@@ -12,7 +12,9 @@ let titleEle = ((title, startAt)) =>
 
 let status = isPaused =>
   isPaused ?
-    <strong> {" [ PAUSED ] " |> ReasonReact.string} </strong> :
+    <strong style={ReactDOMRe.Style.make(~color="#209CEE", ())}>
+      {" [ PAUSED ] " |> ReasonReact.string}
+    </strong> :
     ReasonReact.null;
 
 let component = ReasonReact.statelessComponent("Info");
@@ -21,8 +23,14 @@ let make = (~title, ~startAt, ~isPaused, _children) => {
   ...component,
   render: _self =>
     <div className="notification">
-      <i className="fas fa-info-circle" />
-      {(title, startAt) |> titleEle}
-      {isPaused |> status}
+      <div className="tile is-ancestor">
+        <div className="tile">
+          <span className="icon has-text-info">
+            <i className="fas fa-info-circle" />
+          </span>
+          {(title, startAt) |> titleEle}
+        </div>
+        <div className="tile is-1"> {isPaused |> status} </div>
+      </div>
     </div>,
 };
