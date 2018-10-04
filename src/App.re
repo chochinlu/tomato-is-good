@@ -49,6 +49,9 @@ let secondsForMode = mode =>
   | LongBreak => 10 * 60
   };
 
+let isPaused = state => state.play ? false : (secondsForMode(state.mode) == state.timeLeft ? false: true)
+
+
 let timeIsUp = state => state.timeLeft == 1;
 
 let updateTimeLeft = state => {
@@ -126,7 +129,7 @@ let make = _children => {
         setLongBreak={_event => send(Set(LongBreak))}
         togglePlay={_event => send(TogglePlay)}
       />
-      <Info title={title(state)} startAt={state.startAt} />
+      <Info title={title(state)} startAt={state.startAt} isPaused=(isPaused(state)) />
       <HistoryList />
       <About />
     </div>,
