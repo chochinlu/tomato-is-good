@@ -18,6 +18,7 @@ type state = {
   mode,
   completeCount: int,
   play: bool,
+  logs: list(Utils.log),
 };
 
 let modeName = mode =>
@@ -49,8 +50,9 @@ let secondsForMode = mode =>
   | LongBreak => 10 * 60
   };
 
-let isPaused = state => state.play ? false : (secondsForMode(state.mode) == state.timeLeft ? false: true)
-
+let isPaused = state =>
+  state.play ?
+    false : secondsForMode(state.mode) == state.timeLeft ? false : true;
 
 let timeIsUp = state => state.timeLeft == 1;
 
@@ -70,12 +72,16 @@ let updateMode = state => {
     | ShortBreak => Pomodoro
     | LongBreak => LongBreak
     };
+
+  let log: Utils.log = {title: title(state), startAt: state.startAt};
+
   ReasonReact.Update({
     ...state,
     timeLeft: secondsForMode(mode),
     mode,
     completeCount,
     play: false,
+    logs: [log, ...state.logs],
   });
 };
 
@@ -90,6 +96,7 @@ let make = _children => {
     mode: Pomodoro,
     completeCount: 0,
     play: false,
+    logs: [],
   },
   didMount: self => {
     let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
@@ -129,8 +136,12 @@ let make = _children => {
         setLongBreak={_event => send(Set(LongBreak))}
         togglePlay={_event => send(TogglePlay)}
       />
-      <Info title={title(state)} startAt={state.startAt} isPaused=(isPaused(state)) />
-      <HistoryList />
+      <Info
+        title={title(state)}
+        startAt={state.startAt}
+        isPaused={isPaused(state)}
+      />
+      <HistoryList logs={state.logs} />
       <About />
     </div>,
 };
