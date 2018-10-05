@@ -62,6 +62,8 @@ let updateTimeLeft = state => {
   ReasonReact.Update({...state, timeLeft});
 };
 
+let log = state: Utils.log => {title: title(state), startAt: state.startAt};
+
 let updateMode = state => {
   let completeCount =
     state.mode == Pomodoro ? state.completeCount + 1 : state.completeCount;
@@ -73,15 +75,13 @@ let updateMode = state => {
     | LongBreak => LongBreak
     };
 
-  let log: Utils.log = {title: title(state), startAt: state.startAt};
-
   ReasonReact.Update({
     ...state,
     timeLeft: secondsForMode(mode),
     mode,
     completeCount,
     play: false,
-    logs: [log, ...state.logs],
+    logs: [log(state), ...state.logs],
   });
 };
 
@@ -107,13 +107,16 @@ let make = _children => {
     | Submit(taskText) =>
       ReasonReact.Update({...state, task: Some(taskText)})
     | Set(mode) =>
+      let shouldLog = secondsForMode(state.mode) !== state.timeLeft;
+
       ReasonReact.Update({
         ...state,
         mode,
         timeLeft: secondsForMode(mode),
         play: false,
         startAt: None,
-      })
+        logs: shouldLog ? [log(state), ...state.logs] : state.logs,
+      });
     | Tick => timeIsUp(state) ? updateMode(state) : updateTimeLeft(state)
     | TogglePlay =>
       ReasonReact.Update({
