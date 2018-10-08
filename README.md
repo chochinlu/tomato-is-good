@@ -4,6 +4,8 @@ A simple [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) 
 
 The timer was Inspired by [Red](https://github.com/excitement-engineer/Red).
 
+![screenshot](https://user-images.githubusercontent.com/1825273/46591994-5d892c00-caf1-11e8-9d05-a46b251fe096.png)
+
 ## Usage
 
 Please visit: [https://chochinlu.github.io/tomato-is-good/](https://chochinlu.github.io/tomato-is-good/)
