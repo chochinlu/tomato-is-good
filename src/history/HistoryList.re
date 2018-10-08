@@ -1,4 +1,8 @@
-let component = ReasonReact.statelessComponent("HistoryList");
+let resultStr = (result: Utils.taskResult) =>
+  switch (result) {
+  | Finished => " [ Finished ]"
+  | Terminated => " [ Terminated ]"
+  };
 
 let logEle = (log: Utils.log) => {
   let logStr =
@@ -7,10 +11,13 @@ let logEle = (log: Utils.log) => {
     ++ " ] "
     ++ Info.timeStr(log.startAt)
     ++ " ,End At: "
-    ++ Js.Date.toTimeString(log.endAt);
+    ++ Js.Date.toTimeString(log.endAt)
+    ++ resultStr(log.result);
 
   <p> {logStr |> ReasonReact.string} </p>;
 };
+
+let component = ReasonReact.statelessComponent("HistoryList");
 
 let make = (~logs, _children) => {
   ...component,

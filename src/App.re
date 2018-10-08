@@ -62,11 +62,16 @@ let updateTimeLeft = state => {
   ReasonReact.Update({...state, timeLeft});
 };
 
-let log = state: Utils.log => {
+let log = (~result: Utils.taskResult=Finished, ~state, ()): Utils.log => {
   title: title(state),
   startAt: state.startAt,
   endAt: Js.Date.make(),
+  result,
 };
+
+let logFinished = state => log(~state, ());
+
+let logTerminated = state => log(~result=Terminated, ~state, ());
 
 let updateMode = state => {
   let completeCount =
@@ -85,7 +90,7 @@ let updateMode = state => {
     mode,
     completeCount,
     play: false,
-    logs: [log(state), ...state.logs],
+    logs: [logFinished(state), ...state.logs],
   });
 };
 
@@ -119,7 +124,7 @@ let make = _children => {
         timeLeft: secondsForMode(mode),
         play: false,
         startAt: None,
-        logs: shouldLog ? [log(state), ...state.logs] : state.logs,
+        logs: shouldLog ? [logTerminated(state), ...state.logs] : state.logs,
       });
     | Tick => timeIsUp(state) ? updateMode(state) : updateTimeLeft(state)
     | TogglePlay =>
