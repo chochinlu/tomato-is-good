@@ -62,7 +62,11 @@ let updateTimeLeft = state => {
   ReasonReact.Update({...state, timeLeft});
 };
 
-let log = state: Utils.log => {title: title(state), startAt: state.startAt};
+let log = state: Utils.log => {
+  title: title(state),
+  startAt: state.startAt,
+  endAt: Js.Date.make(),
+};
 
 let updateMode = state => {
   let completeCount =

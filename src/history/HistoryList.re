@@ -1,7 +1,14 @@
 let component = ReasonReact.statelessComponent("HistoryList");
 
 let logEle = (log: Utils.log) => {
-  let logStr = "  [ " ++ log.title ++ " ] " ++ Info.timeStr(log.startAt);
+  let logStr =
+    "  [ "
+    ++ log.title
+    ++ " ] "
+    ++ Info.timeStr(log.startAt)
+    ++ " ,End At: "
+    ++ Js.Date.toTimeString(log.endAt);
+
   <p> {logStr |> ReasonReact.string} </p>;
 };
 
