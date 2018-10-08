@@ -153,7 +153,7 @@ let make = _children => {
         startAt={state.startAt}
         isPaused={isPaused(state)}
       />
-      <HistoryList logs={state.logs} />
+      <HistoryList logs={state.logs} completeCount={state.completeCount} />
       <About />
     </div>,
 };

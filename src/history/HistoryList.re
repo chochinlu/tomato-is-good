@@ -30,15 +30,22 @@ let logEle = (log: Utils.log) => {
   <p className="m-t-b"> {logStr |> ReasonReact.string} tag </p>;
 };
 
+let completeCountEle = completeCount =>
+  <p>
+    {"Complete Count: " |> ReasonReact.string}
+    <strong> {completeCount |> string_of_int |> ReasonReact.string} </strong>
+  </p>;
+
 let component = ReasonReact.statelessComponent("HistoryList");
 
-let make = (~logs, _children) => {
+let make = (~logs, ~completeCount, _children) => {
   ...component,
   render: _self =>
     <div className="box">
+      {completeCount |> completeCountEle}
       {
         List.length(logs) == 0 ?
-          <h1> {"HistoryList" |> ReasonReact.string} </h1> :
+          ReasonReact.null :
           logs |> List.map(logEle) |> Array.of_list |> ReasonReact.array
       }
     </div>,
