@@ -13,6 +13,19 @@ let resultStyle = (result: Utils.taskResult) => {
   "m-l tag " ++ tagStyle;
 };
 
+let convertTimeStr = ((startAt, endAt)): string => {
+  let startAtTime =
+    switch (startAt) {
+    | None => endAt
+    | Some(time) => time
+    };
+
+  let duration =
+    (Js.Date.getTime(endAt) -. Js.Date.getTime(startAtTime)) /. 1000.;
+
+  duration |> int_of_float |> Timer.convertedTime;
+};
+
 let logEle = (log: Utils.log) => {
   let logStr =
     "  [ "
@@ -20,7 +33,9 @@ let logEle = (log: Utils.log) => {
     ++ " ] "
     ++ Info.timeStr(log.startAt)
     ++ " ,End At: "
-    ++ Js.Date.toTimeString(log.endAt);
+    ++ Js.Date.toTimeString(log.endAt)
+    ++ ", Duration: "
+    ++ ((log.startAt, log.endAt) |> convertTimeStr);
 
   let tag =
     <span className={resultStyle(log.result)}>
