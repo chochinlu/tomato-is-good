@@ -26,7 +26,7 @@ let convertTimeStr = ((startAt, endAt)): string => {
   duration |> int_of_float |> Timer.convertedTime;
 };
 
-let logEle = (log: Utils.log) => {
+let logEle = (index: int, log: Utils.log) => {
   let logStr =
     "  [ "
     ++ log.title
@@ -42,7 +42,10 @@ let logEle = (log: Utils.log) => {
       {log.result |> resultStr |> ReasonReact.string}
     </span>;
 
-  <p className="m-t-b"> {logStr |> ReasonReact.string} tag </p>;
+  <p className="m-t-b" key={"logEle-" ++ string_of_int(index)}>
+    {logStr |> ReasonReact.string}
+    tag
+  </p>;
 };
 
 let completeCountEle = completeCount =>
@@ -61,7 +64,7 @@ let make = (~logs, ~completeCount, _children) => {
       {
         List.length(logs) == 0 ?
           ReasonReact.null :
-          logs |> List.map(logEle) |> Array.of_list |> ReasonReact.array
+          logs |> List.mapi(logEle) |> Array.of_list |> ReasonReact.array
       }
     </div>,
 };
