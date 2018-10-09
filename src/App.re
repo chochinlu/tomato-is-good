@@ -74,8 +74,6 @@ let logFinished = state => log(~state, ());
 let logTerminated = state => log(~result=Terminated, ~state, ());
 
 let updateMode = state => {
-  Noti.make(modeName(state.mode), Noti.options(~body="Time is Up!"));
-
   let completeCount =
     state.mode == Pomodoro ? state.completeCount + 1 : state.completeCount;
   let shouldUpdateToLongBreak = completeCount mod 4 == 0;
@@ -85,15 +83,18 @@ let updateMode = state => {
     | ShortBreak => Pomodoro
     | LongBreak => LongBreak
     };
-
-  ReasonReact.Update({
-    ...state,
-    timeLeft: secondsForMode(mode),
-    mode,
-    completeCount,
-    play: false,
-    logs: [logFinished(state), ...state.logs],
-  });
+  ReasonReact.UpdateWithSideEffects(
+    {
+      ...state,
+      timeLeft: secondsForMode(mode),
+      mode,
+      completeCount,
+      play: false,
+      logs: [logFinished(state), ...state.logs],
+    },
+    _self =>
+      Noti.make(modeName(state.mode), Noti.options(~body="Time is Up!")),
+  );
 };
 
 let component = ReasonReact.reducerComponent("App");
