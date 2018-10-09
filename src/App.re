@@ -74,6 +74,8 @@ let logFinished = state => log(~state, ());
 let logTerminated = state => log(~result=Terminated, ~state, ());
 
 let updateMode = state => {
+  Noti.make(modeName(state.mode), Noti.options(~body="Time is Up!"));
+
   let completeCount =
     state.mode == Pomodoro ? state.completeCount + 1 : state.completeCount;
   let shouldUpdateToLongBreak = completeCount mod 4 == 0;
@@ -108,6 +110,18 @@ let make = _children => {
     logs: [],
   },
   didMount: self => {
+    /* Noti.requestPermission() |> Js.log; */
+
+    let _a = [%raw
+      {|
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          var notification = new Notification("Tomato is Good.");
+        }
+      })
+    |}
+    ];
+
     let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
     self.onUnmount(() => Js.Global.clearInterval(intervalId));
   },
@@ -117,7 +131,6 @@ let make = _children => {
       ReasonReact.Update({...state, task: Some(taskText)})
     | Set(mode) =>
       let shouldLog = secondsForMode(state.mode) !== state.timeLeft;
-
       ReasonReact.Update({
         ...state,
         mode,
