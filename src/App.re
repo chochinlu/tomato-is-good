@@ -45,9 +45,9 @@ let title = state =>
 
 let secondsForMode = mode =>
   switch (mode) {
-  | Pomodoro => 25 * 60
-  | ShortBreak => 5 * 60
-  | LongBreak => 10 * 60
+  | Pomodoro => 1 * 60
+  | ShortBreak => 1 * 60
+  | LongBreak => 1 * 60
   };
 
 let isPaused = state =>
