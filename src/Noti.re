@@ -1,7 +1,7 @@
 [@bs.val] external userPermission: string = "Notification.permission";
 
 [@bs.val]
-external requestPermission: unit => string = "Notification.requestPermission";
+external requestPermission: unit => unit = "Notification.requestPermission";
 
 type permission;
 

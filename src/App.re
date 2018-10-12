@@ -111,17 +111,7 @@ let make = _children => {
     logs: [],
   },
   didMount: self => {
-    /* Noti.requestPermission() |> Js.log; */
-
-    let _a = [%raw
-      {|
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          var notification = new Notification("Tomato is Good.");
-        }
-      })
-    |}
-    ];
+    Noti.requestPermission();
 
     let intervalId = Js.Global.setInterval(() => self.send(Tick), 1000);
     self.onUnmount(() => Js.Global.clearInterval(intervalId));
