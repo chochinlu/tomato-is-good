@@ -3,14 +3,14 @@ module Link = {
   let make = (~title, ~href, _children) => {
     ...component,
     render: _self =>
-      <>
+      <div className="level-item">
         <i className="far fa-arrow-alt-circle-right" />
-        <strong className="padding-left-icon padding-right-text">
-          <a className="level-item" href target="blank">
+        <a href target="blank">
+          <strong className="padding-left-icon padding-right-text">
             {title |> ReasonReact.string}
-          </a>
-        </strong>
-      </>,
+          </strong>
+        </a>
+      </div>,
   };
 };
 
