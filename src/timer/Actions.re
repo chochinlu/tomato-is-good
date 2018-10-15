@@ -23,7 +23,9 @@ let make = (~play, ~togglePlay, _children) => {
   ...component,
   render: _self =>
     <div className="tile">
-      <a className="button is-fullwidth is-medium" onClick=togglePlay>
+      <a
+        className="button is-rounded is-fullwidth is-medium"
+        onClick=togglePlay>
         {play ? <PauseIcon /> : <PlayIcon />}
         <span> {(play ? "Pause" : "Play") |> ReasonReact.string} </span>
       </a>

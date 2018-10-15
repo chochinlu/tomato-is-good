@@ -6,7 +6,7 @@ let make = (~label, ~onClick, ~selected, _children) => {
     <div className="tile">
       <a
         className={
-          "button is-fullwidth button "
+          "button is-rounded is-fullwidth "
           ++ (selected ? "is-info" : "is-primary is-outlined")
         }
         onClick>
