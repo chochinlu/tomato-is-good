@@ -21,7 +21,7 @@ let convertTimeStr = ((startAt, endAt)): string => {
     };
 
   let duration =
-    (Js.Date.getTime(endAt) -. Js.Date.getTime(startAtTime)) /. 1000.;
+    (Js.Date.getTime(endAt) -. Js.Date.getTime(startAtTime)) /. 1000. +. 1.0;
 
   duration |> int_of_float |> Timer.convertedTime;
 };
