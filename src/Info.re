@@ -1,7 +1,7 @@
 let timeStr = startAt =>
   switch (startAt) {
   | None => ""
-  | Some(time) => " Start At: " ++ Js.Date.toTimeString(time)
+  | Some(time) => Js.Date.toString(time)
   };
 
 let titleEle = ((title, startAt)) =>

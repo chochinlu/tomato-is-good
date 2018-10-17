@@ -28,3 +28,7 @@
 .m-l {
   margin-left: 0.5em;
 }
+
+.smaller {
+  font-size: 0.9em;
+}

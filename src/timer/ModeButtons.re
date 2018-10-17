@@ -10,12 +10,12 @@ let make = (~modeName, ~setPomodoro, ~setShortBreak, ~setLongBreak, _children) =
         selected={modeName == "Pomodoro"}
       />
       <ModeButton
-        label="ShortBreak"
+        label="Short Break"
         onClick=setShortBreak
         selected={modeName == "ShortBreak"}
       />
       <ModeButton
-        label="LongBreak"
+        label="Long Break"
         onClick=setLongBreak
         selected={modeName == "LongBreak"}
       />

@@ -27,13 +27,11 @@ let convertTimeStr = ((startAt, endAt)): string => {
 };
 
 let logEle = (index: int, log: Utils.log) => {
+  let titleStr = "  [ " ++ log.title ++ " ] ";
   let logStr =
-    "  [ "
-    ++ log.title
-    ++ " ] "
-    ++ Info.timeStr(log.startAt)
-    ++ " ,End At: "
-    ++ Js.Date.toTimeString(log.endAt)
+    Info.timeStr(log.startAt)
+    ++ " --> "
+    ++ Js.Date.toString(log.endAt)
     ++ ", Duration: "
     ++ ((log.startAt, log.endAt) |> convertTimeStr);
 
@@ -42,7 +40,8 @@ let logEle = (index: int, log: Utils.log) => {
       {log.result |> resultStr |> ReasonReact.string}
     </span>;
 
-  <p className="m-t-b" key={"logEle-" ++ string_of_int(index)}>
+  <p className="m-t-b smaller" key={"logEle-" ++ string_of_int(index)}>
+    <strong> {titleStr |> ReasonReact.string} </strong>
     {logStr |> ReasonReact.string}
     tag
   </p>;
