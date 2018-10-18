@@ -80,8 +80,8 @@ let updateMode = state => {
   let mode =
     switch (state.mode) {
     | Pomodoro => shouldUpdateToLongBreak ? LongBreak : ShortBreak
-    | ShortBreak => Pomodoro
-    | LongBreak => LongBreak
+    | ShortBreak
+    | LongBreak => Pomodoro
     };
   ReasonReact.UpdateWithSideEffects(
     {
