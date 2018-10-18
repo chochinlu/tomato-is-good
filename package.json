@@ -1,6 +1,6 @@
 {
   "name": "tomato-is-good",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Pomodoro implement.",
   "scripts": {
     "build": "bsb -make-world",
@@ -11,10 +11,16 @@
     "webpack:production": "NODE_ENV=production webpack"
   },
   "keywords": [
-    "BuckleScript"
+    "BuckleScript",
+    "pomodoro",
+    "reasonml",
+    "react"
   ],
   "author": "Cho-Ching Lu <chochinlu@gmail.com>",
   "homepage": "https://chochinlu.github.io/tomato-is-good",
+  "bugs": {
+    "url": "https://github.com/chochinlu/tomato-is-good/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "react": "^16.2.0",
