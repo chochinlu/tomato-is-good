@@ -26,6 +26,20 @@ let convertTimeStr = ((startAt, endAt)): string => {
   duration |> int_of_float |> Timer.convertedTime;
 };
 
+let logStyle = title =>
+  switch (title) {
+  | "ShortBreak"
+  | "LongBreak" => "m-t-b smaller lighter"
+  | _ => "m-t-b smaller"
+  };
+
+let logTitleStyle = title =>
+  switch (title) {
+  | "ShortBreak"
+  | "LongBreak" => "lighter"
+  | _ => ""
+  };
+
 let logEle = (index: int, log: Utils.log) => {
   let titleStr = "  [ " ++ log.title ++ " ] ";
   let logStr =
@@ -40,8 +54,10 @@ let logEle = (index: int, log: Utils.log) => {
       {log.result |> resultStr |> ReasonReact.string}
     </span>;
 
-  <p className="m-t-b smaller" key={"logEle-" ++ string_of_int(index)}>
-    <strong> {titleStr |> ReasonReact.string} </strong>
+  <p className={logStyle(log.title)} key={"logEle-" ++ string_of_int(index)}>
+    <strong className={logTitleStyle(log.title)}>
+      {titleStr |> ReasonReact.string}
+    </strong>
     {logStr |> ReasonReact.string}
     tag
   </p>;
