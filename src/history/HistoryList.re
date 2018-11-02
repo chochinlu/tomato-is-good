@@ -44,8 +44,8 @@ let logEle = (index: int, log: Utils.log) => {
   let titleStr = "  [ " ++ log.title ++ " ] ";
   let logStr =
     Info.timeStr(log.startAt)
-    ++ " --> "
-    ++ Js.Date.toString(log.endAt)
+    ++ " ,End at "
+    ++ Info.formatedTime(log.endAt)
     ++ ", Duration: "
     ++ ((log.startAt, log.endAt) |> convertTimeStr);
 

@@ -1,7 +1,24 @@
+let addZeroStr = dateStr =>
+  String.length(dateStr) === 1 ? "0" ++ dateStr : dateStr;
+
+let floatDateToString = floatDate =>
+  floatDate |> int_of_float |> string_of_int |> addZeroStr;
+
+let formatedTime = someTime => {
+  let year = someTime |> Js.Date.getFullYear |> floatDateToString;
+  let month =
+    someTime |> Js.Date.getMonth |> (e => e +. 1. |> floatDateToString);
+  let day = someTime |> Js.Date.getDay |> floatDateToString;
+  let hour = someTime |> Js.Date.getHours |> floatDateToString;
+  let min = someTime |> Js.Date.getMinutes |> floatDateToString;
+  let sec = someTime |> Js.Date.getSeconds |> floatDateToString;
+  year ++ "/" ++ month ++ "/" ++ day ++ " " ++ hour ++ ":" ++ min ++ ":" ++ sec;
+};
+
 let timeStr = startAt =>
   switch (startAt) {
   | None => ""
-  | Some(time) => Js.Date.toString(time)
+  | Some(time) => " Start at " ++ formatedTime(time)
   };
 
 let titleEle = ((title, startAt)) =>
