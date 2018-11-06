@@ -40,29 +40,6 @@ let logTitleStyle = title =>
   | _ => ""
   };
 
-let logEle = (index: int, log: Utils.log) => {
-  let titleStr = "  [ " ++ log.title ++ " ] ";
-  let logStr =
-    Info.timeStr(log.startAt)
-    ++ " ,End at "
-    ++ Info.formatedTime(log.endAt)
-    ++ ", Duration: "
-    ++ ((log.startAt, log.endAt) |> convertTimeStr);
-
-  let tag =
-    <span className={resultStyle(log.result)}>
-      {log.result |> resultStr |> ReasonReact.string}
-    </span>;
-
-  <p className={logStyle(log.title)} key={"logEle-" ++ string_of_int(index)}>
-    <strong className={logTitleStyle(log.title)}>
-      {titleStr |> ReasonReact.string}
-    </strong>
-    {logStr |> ReasonReact.string}
-    tag
-  </p>;
-};
-
 let logRow = (index: int, log: Utils.log) =>
   <tr key={"logEle-" ++ string_of_int(index)}>
     <td> {log.title |> ReasonReact.string} </td>
