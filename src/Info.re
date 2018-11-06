@@ -18,7 +18,7 @@ let formatedTime = someTime => {
 let timeStr = startAt =>
   switch (startAt) {
   | None => ""
-  | Some(time) => " Start at " ++ formatedTime(time)
+  | Some(time) => formatedTime(time)
   };
 
 let titleEle = ((title, startAt)) =>

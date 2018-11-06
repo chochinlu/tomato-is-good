@@ -63,6 +63,42 @@ let logEle = (index: int, log: Utils.log) => {
   </p>;
 };
 
+let logRow = (index: int, log: Utils.log) =>
+  <tr key={"logEle-" ++ string_of_int(index)}>
+    <td> {log.title |> ReasonReact.string} </td>
+    <td> {Info.timeStr(log.startAt) |> ReasonReact.string} </td>
+    <td> {Info.formatedTime(log.endAt) |> ReasonReact.string} </td>
+    <td>
+      {(log.startAt, log.endAt) |> convertTimeStr |> ReasonReact.string}
+    </td>
+    <td>
+      <span className={resultStyle(log.result)}>
+        {log.result |> resultStr |> ReasonReact.string}
+      </span>
+    </td>
+  </tr>;
+
+let logTable = logs =>
+  <table className="table is-striped is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        {
+          [|"Task", "Start At", "End At", "Duration", "Result"|]
+          |> Array.mapi((index, e) =>
+               <th key={"logTitle-" ++ string_of_int(index)}>
+                 <abbr title=e />
+                 {e |> ReasonReact.string}
+               </th>
+             )
+          |> ReasonReact.array
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {logs |> List.mapi(logRow) |> Array.of_list |> ReasonReact.array}
+    </tbody>
+  </table>;
+
 let completeCountEle = completeCount =>
   <p>
     {"Complete Count: " |> ReasonReact.string}
@@ -76,10 +112,6 @@ let make = (~logs, ~completeCount, _children) => {
   render: _self =>
     <div className="box">
       {completeCount |> completeCountEle}
-      {
-        List.length(logs) == 0 ?
-          ReasonReact.null :
-          logs |> List.mapi(logEle) |> Array.of_list |> ReasonReact.array
-      }
+      {List.length(logs) == 0 ? ReasonReact.null : logs |> logTable}
     </div>,
 };
