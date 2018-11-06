@@ -8,7 +8,7 @@ let resultStyle = (result: Utils.taskResult) => {
   let tagStyle =
     switch (result) {
     | Finished => "is-primary"
-    | Terminated => "is-light"
+    | Terminated => "is-dark"
     };
   "m-l tag " ++ tagStyle;
 };
