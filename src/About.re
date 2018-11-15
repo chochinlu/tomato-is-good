@@ -31,7 +31,7 @@ let make = _children => {
           href="https://francescocirillo.com/pages/pomodoro-technique"
         />
         <Link
-          title={j|蕃茄工作法wiki|j}
+          title={j|蕃茄工作法|j}
           href="https://zh.wikipedia.org/wiki/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95"
         />
       </div>
