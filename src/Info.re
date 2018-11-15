@@ -8,7 +8,7 @@ let formatedTime = someTime => {
   let year = someTime |> Js.Date.getFullYear |> floatDateToString;
   let month =
     someTime |> Js.Date.getMonth |> (e => e +. 1. |> floatDateToString);
-  let day = someTime |> Js.Date.getDay |> floatDateToString;
+  let day = someTime |> Js.Date.getDate |> floatDateToString;
   let hour = someTime |> Js.Date.getHours |> floatDateToString;
   let min = someTime |> Js.Date.getMinutes |> floatDateToString;
   let sec = someTime |> Js.Date.getSeconds |> floatDateToString;
