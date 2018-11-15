@@ -56,39 +56,43 @@ let logRow = (index: int, log: Utils.log) =>
   </tr>;
 
 let logTable = logs =>
-  <table className="table is-striped is-hoverable is-fullwidth">
-    <thead>
-      <tr>
-        {
-          [|"Task", "Start At", "End At", "Duration", "Result"|]
-          |> Array.mapi((index, e) =>
-               <th key={"logTitle-" ++ string_of_int(index)}>
-                 <abbr title=e />
-                 {e |> ReasonReact.string}
-               </th>
-             )
-          |> ReasonReact.array
-        }
-      </tr>
-    </thead>
-    <tbody>
-      {logs |> List.mapi(logRow) |> Array.of_list |> ReasonReact.array}
-    </tbody>
-  </table>;
+  <div className="box">
+    <table className="table is-striped is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          {
+            [|"Task", "Start At", "End At", "Duration", "Result"|]
+            |> Array.mapi((index, e) =>
+                 <th key={"logTitle-" ++ string_of_int(index)}>
+                   <abbr title=e />
+                   {e |> ReasonReact.string}
+                 </th>
+               )
+            |> ReasonReact.array
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {logs |> List.mapi(logRow) |> Array.of_list |> ReasonReact.array}
+      </tbody>
+    </table>
+  </div>;
 
 let completeCountEle = completeCount =>
-  <p>
-    {"Complete Count: " |> ReasonReact.string}
-    <strong> {completeCount |> string_of_int |> ReasonReact.string} </strong>
-  </p>;
+  <div className="box">
+    <p>
+      {"Complete Count: " |> ReasonReact.string}
+      <strong> {completeCount |> string_of_int |> ReasonReact.string} </strong>
+    </p>
+  </div>;
 
 let component = ReasonReact.statelessComponent("HistoryList");
 
 let make = (~logs, ~completeCount, _children) => {
   ...component,
   render: _self =>
-    <div className="box">
+    <>
       {completeCount |> completeCountEle}
       {List.length(logs) == 0 ? ReasonReact.null : logs |> logTable}
-    </div>,
+    </>,
 };
