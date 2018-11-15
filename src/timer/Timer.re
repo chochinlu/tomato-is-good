@@ -9,6 +9,16 @@ let convertedTime = seconds => {
   formatTime(minutesRemaining) ++ ":" ++ formatTime(secondsRemaining);
 };
 
+let timeLevelStyle = modeName => {
+  let basic = "timer-label ";
+  switch (modeName) {
+  | "Pomodoro" => basic ++ "gray"
+  | "ShortBreak"
+  | "LongBreak" => basic ++ "lighter-gray"
+  | _ => basic
+  };
+};
+
 let component = ReasonReact.statelessComponent("Timer");
 
 let make =
@@ -26,7 +36,7 @@ let make =
   render: _self =>
     <div className="box">
       <ModeButtons setPomodoro setShortBreak setLongBreak modeName />
-      <h1 className="timer-label">
+      <h1 className={modeName |> timeLevelStyle}>
         {timeLeft |> convertedTime |> ReasonReact.string}
       </h1>
       <Actions play togglePlay />
